@@ -1,9 +1,12 @@
-from os import open
+import random
 
 
 def jogar():
     cabecalho_1 = 50 * "*"
     cabecalho_2 = "Bem vindos ao jogo de forca"
+
+    READ = "r"
+    WRITE = "w"
 
     mensagem_fim_jogo_acerto = "Parabéns você acertou a palavra secreta {}."
     mensagem_fim_jogo_erro = "Que pena. Você excedeu o número de tentativas. A palavra secreta era {}"
@@ -12,14 +15,20 @@ def jogar():
     mensagem_qtd_letras_faltando = "Faltam {} letras para descobrir a palavra secreta"
     mensagem_tentativas_restante = "Ainda lhe restam {} tentativas."
 
-    palavra_secreta = "anticonstitucionalissimamente".upper()
     letra_escondida = '_'
-    palavra_descobrindo = [letra_escondida for letra in palavra_secreta]
 
     caminho_arquivo_palavras = "palavras.txt"
-    arquivo = open(caminho_arquivo_palavras,)
+    arquivo = open(caminho_arquivo_palavras,READ)
+    palavras_coletadas = []
 
-    tentativas = len(palavra_secreta)#* 2
+    for linhas in arquivo:
+        palavras_coletadas.append(linhas.strip().upper())
+    arquivo.close()
+    index_busca_palavra = random.randrange(0,len(palavras_coletadas))
+    palavra_secreta = palavras_coletadas[index_busca_palavra]
+    palavra_descobrindo = [letra_escondida for letra in palavra_secreta]
+
+    tentativas = len(palavra_secreta)
 
     enforcado = False
     acertou = False
